@@ -110,7 +110,7 @@ def format_issue_with_labels(issue: Issue):
     for label in labels:
         labels_str += '[%s](https://github.com/%s/ghiblog/labels/%s), ' % (
             label.name, username, urllib.parse.quote(label.name))
-    print(issue.body)
+    
     if issue.body:
         if '---' in issue.body:
             body_summary = issue.body[:issue.body.index('---')]
@@ -130,8 +130,8 @@ def format_issue_with_labels(issue: Issue):
 
 ---
 
-'''.format(issue.title, issue.html_url, sup('%s :speech_balloon:' % issue.comments), issue.created_at, labels_str[:-2],
-           body_summary)
+'''.format(issue.title, issue.html_url, sup('%s :speech_balloon:' % issue.comments), 
+           issue.created_at.strftime('%Y-%m-%d'), labels_str[:-2], body_summary)
 
 
 def bundle_new_created_section():
@@ -151,26 +151,31 @@ def bundle_list_by_labels_section():
     global ghiblog
     all_labels = ghiblog.get_labels()
 
-    # 如果没有标签，返回提示
     if not all_labels:
         return "## 分类  :card_file_box: \n（暂无分类标签）"
 
-    # 生成词云
+    # 生成词云部分
     try:
         wordcloud_image_url = WordCloudGenerator(ghiblog).generate()
+        wordcloud_section = f"""
+<p align="center">
+    <img src="{wordcloud_image_url}" alt="Issue词云" title="Issue词云" width="80%">
+    <br>
+    <sub>点击下方分类标签查看详细内容</sub>
+</p>
+"""
     except Exception as e:
         print(f"生成词云失败: {e}")
-        wordcloud_image_url = "https://placeholder-for-wordcloud.png"  # 备用图片
+        wordcloud_section = ""
 
-    list_by_labels_section = """
+    list_by_labels_section = f"""
 ## 分类  :card_file_box: 
 
+{wordcloud_section}
+
 <details open="open">
-    <summary>
-        <img src="%s" title="词云, 点击展开详细分类" alt="词云， 点击展开详细分类">
-        <p align="center">:cloud: 词云 :cloud: <sub>点击词云展开详细分类:point_down: </sub></p>
-    </summary>
-""" % (wordcloud_image_url,)
+<summary><b>点击展开/折叠分类</b></summary>
+"""
 
     for label in all_labels:
         try:
@@ -178,11 +183,15 @@ def bundle_list_by_labels_section():
             count = issues_in_label.totalCount
             temp = ""
             for issue in issues_in_label:
-                temp += format_issue(issue)
+                temp += f"""
+<div style="margin: 10px 0; padding: 10px; border-left: 3px solid #eee;">
+{format_issue_with_labels(issue)}
+</div>
+"""
             
             list_by_labels_section += f"""
-<details>
-<summary>{label.name}\t<sup>{count}:newspaper:</sup></summary>
+<details style="margin-bottom: 15px;">
+<summary><b>{label.name}</b> <sup>{count}篇</sup></summary>
 {temp}
 </details>
 """
