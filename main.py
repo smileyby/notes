@@ -150,10 +150,18 @@ def bundle_new_created_section():
 
 def bundle_list_by_labels_section():
     global ghiblog
-    global user
+    all_labels = ghiblog.get_labels()
 
-    # word cloud
-    wordcloud_image_url = WordCloudGenerator(ghiblog).generate()
+    # 如果没有标签，返回提示
+    if not all_labels:
+        return "## 分类  :card_file_box: \n（暂无分类标签）"
+
+    # 生成词云
+    try:
+        wordcloud_image_url = WordCloudGenerator(ghiblog).generate()
+    except Exception as e:
+        print(f"生成词云失败: {e}")
+        wordcloud_image_url = "https://placeholder-for-wordcloud.png"  # 备用图片
 
     list_by_labels_section = """
 ## 分类  :card_file_box: 
@@ -163,34 +171,27 @@ def bundle_list_by_labels_section():
         <img src="%s" title="词云, 点击展开详细分类" alt="词云， 点击展开详细分类">
         <p align="center">:cloud: 词云 :cloud: <sub>点击词云展开详细分类:point_down: </sub></p>
     </summary>
-
 """ % (wordcloud_image_url,)
 
-    all_labels = ghiblog.get_labels()
-
     for label in all_labels:
-        temp = ''
-        # 这里的count是用来计算该label下有多少issue的, 按理说应该是取issues_in_label的totalCount, 但是不知道为什么取出来的一直都是
-        # 所有的issue数量, 之后再优化.
-        count = 0
-        issues_in_label = ghiblog.get_issues(labels=(label,))
-        for issue in issues_in_label:
-            temp += format_issue(issue)
-            count += 1
-
-        list_by_labels_section += '''
+        try:
+            issues_in_label = ghiblog.get_issues(labels=[label])  # 关键修复：labels=[label]
+            count = issues_in_label.totalCount
+            temp = ""
+            for issue in issues_in_label:
+                temp += format_issue(issue)
+            
+            list_by_labels_section += f"""
 <details>
-<summary>%s\t<sup>%s:newspaper:</sup></summary>
-
-%s
-
+<summary>{label.name}\t<sup>{count}:newspaper:</sup></summary>
+{temp}
 </details>
-''' % (label.name, count, temp)
-
-    list_by_labels_section += """
-
-</details>    
 """
+        except Exception as e:
+            print(f"获取标签 '{label.name}' 的 Issues 失败: {e}")
+            continue
+
+    list_by_labels_section += "</details>"
     return list_by_labels_section
 
 
