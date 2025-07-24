@@ -3,7 +3,7 @@
 <p align='center'>
     <img src="https://badgen.net/badge/labels/65"/>
     <img src="https://badgen.net/github/issues/smileyby/ghiblog"/>
-    <img src="https://badgen.net/badge/last-commit/2025-07-24 07:34:09"/>
+    <img src="https://badgen.net/badge/last-commit/2025-07-24 07:39:35"/>
     <img src="https://badgen.net/github/forks/smileyby/ghiblog"/>
     <img src="https://badgen.net/github/stars/smileyby/ghiblog"/>
     <img src="https://badgen.net/github/watchers/smileyby/ghiblog"/>
@@ -33,8 +33,8 @@
 **开启 html2canvas logging:true，查看截图失败原因**
 1. 图片资源跨域导致截图失败，统一将文件转base64;
 > 如果是第三方平台资源跨域，将跨域资源下载到本地，然后dom选中后，转本地图片base64之后手动替换src即可
-```javascript
-export 
+
+<img width="1071" he
 
 [更多>>>](https://github.com/smileyby/notes/issues/304)
 
