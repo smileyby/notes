@@ -89,10 +89,13 @@ def bundle_summary_section():
 def bundle_pinned_issues_section():
     global ghiblog
     pinned_label = ghiblog.get_label('置顶')
-    pinned_issues = ghiblog.get_issues(labels=(pinned_label,))
+    if not pinned_label:
+        return '\n## 置顶 :thumbsup: \n（暂无置顶文章）\n'
+
+    # 修正：将 labels 参数改为列表形式
+    pinned_issues = ghiblog.get_issues(labels=[pinned_label])
 
     pinned_issues_section = '\n## 置顶 :thumbsup: \n'
-
     for issue in pinned_issues:
         pinned_issues_section += format_issue(issue)
 
