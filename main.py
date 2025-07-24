@@ -92,7 +92,6 @@ def bundle_pinned_issues_section():
     if not pinned_label:
         return '\n## 置顶 :thumbsup: \n（暂无置顶文章）\n'
 
-    # 修正：将 labels 参数改为列表形式
     pinned_issues = ghiblog.get_issues(labels=[pinned_label])
 
     pinned_issues_section = '\n## 置顶 :thumbsup: \n'
@@ -175,7 +174,7 @@ def bundle_list_by_labels_section():
 
     for label in all_labels:
         try:
-            issues_in_label = ghiblog.get_issues(labels=[label])  # 关键修复：labels=[label]
+            issues_in_label = ghiblog.get_issues(labels=[label])
             count = issues_in_label.totalCount
             temp = ""
             for issue in issues_in_label:
@@ -197,39 +196,46 @@ def bundle_list_by_labels_section():
 
 def bundle_cover_image_section() -> str:
     global ghiblog
-    cover_label = ghiblog.get_label(':framed_picture:封面')
-    if cover_label is None:
-        return ''
-    cover_issues = ghiblog.get_issues(labels=(cover_label,))
-    if cover_issues is None or cover_issues.totalCount == 0:
-        return ''
-    comments = cover_issues[0].get_comments()
-    if comments is None or comments.totalCount == 0:
-        return ''
-    c = comments[comments.totalCount - 1]
-    img_md = None
-    img_desc = ''
-    if '---' in c.body:
-        img_md = c.body.split('---')[0]
-        img_desc = c.body.split('---')[1]
-    else:
-        img_md = c.body
-    if img_md is None:
-        return ''
-    img_url = img_md[(img_md.index('(') + 1):img_md.index(')')]
-    print(img_url)
-    return '''
+    try:
+        cover_label = ghiblog.get_label(':framed_picture:封面')
+        if cover_label is None:
+            return ''
+            
+        cover_issues = ghiblog.get_issues(labels=[cover_label])
+        
+        if cover_issues.totalCount == 0:
+            return ''
 
+        comments = cover_issues[0].get_comments()
+        if comments.totalCount == 0:
+            return ''
+
+        last_comment = comments[comments.totalCount - 1]
+        
+        if '---' in last_comment.body:
+            img_md, img_desc = last_comment.body.split('---', 1)
+        else:
+            img_md = last_comment.body
+            img_desc = ''
+
+        if not img_md or '(' not in img_md or ')' not in img_md:
+            return ''
+
+        img_url = img_md[img_md.index('(')+1:img_md.index(')')]
+        
+        return f'''
 <p align='center'>
-<a href='{0}'>
-<img src='{1}' width='50%' alt='{2}'>
+<a href='{last_comment.html_url}'>
+<img src='{img_url}' width='50%' alt='{img_desc}'>
 </a>
 </p>
 <p align='center'>
-<span>{2}</span>
+<span>{img_desc}</span>
 </p>
-
-    '''.format(c.html_url, img_url, img_desc)
+'''
+    except Exception as e:
+        print(f"生成封面图片时出错: {e}")
+        return ''
 
 
 def bundle_projects_section() -> str:
@@ -237,7 +243,7 @@ def bundle_projects_section() -> str:
     project_label = ghiblog.get_label('开源')
     if not project_label:
         return ''
-    issues = ghiblog.get_issues(labels=(project_label,))
+    issues = ghiblog.get_issues(labels=[project_label])
     if not issues or issues.totalCount == 0:
         return ''
     content = ''
