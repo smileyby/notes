@@ -267,9 +267,8 @@ def execute():
     print(summary_section)
 
     # 4. pinned issues section 
-    # this function failed to do fix
-    # pinned_issues_section = bundle_pinned_issues_section()
-    # print(pinned_issues_section)
+    pinned_issues_section = bundle_pinned_issues_section()
+    print(pinned_issues_section)
 
     # 5. new created section
     new_created_section = bundle_new_created_section()
@@ -280,21 +279,26 @@ def execute():
     print(list_by_labels_section)
 
     # 7. cover image section
-    # to do fix
-    # cover_image_section = bundle_cover_image_section()
-    # print(cover_image_section)
-f
+    cover_image_section = bundle_cover_image_section()
+    print(cover_image_section)
+
     # 8. projects section
-    # to do fix
-    # projects_section = bundle_projects_section()
-    # print(projects_section)
+    projects_section = bundle_projects_section()
+    print(projects_section)
 
     # 9. about me section
     # about_me_section = bundle_about_me_section()
     # print(about_me_section)
 
-    # cover_image_section, pinned_issues_section
-    contents = [summary_section, new_created_section, list_by_labels_section, projects_section]
+    # 合并所有内容
+    contents = [
+        summary_section,
+        pinned_issues_section,
+        new_created_section,
+        list_by_labels_section,
+        cover_image_section,
+        projects_section
+    ]
     update_readme_md_file(contents)
 
     print('README.md updated successfully!!!')
