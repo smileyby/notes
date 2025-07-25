@@ -3,7 +3,7 @@
 <p align='center'>
     <img src="https://badgen.net/badge/labels/65"/>
     <img src="https://badgen.net/github/issues/smileyby/ghiblog"/>
-    <img src="https://badgen.net/badge/last-commit/2025-07-24 07:51:44"/>
+    <img src="https://badgen.net/badge/last-commit/2025-07-25 01:54:15"/>
     <img src="https://badgen.net/github/forks/smileyby/ghiblog"/>
     <img src="https://badgen.net/github/stars/smileyby/ghiblog"/>
     <img src="https://badgen.net/github/watchers/smileyby/ghiblog"/>
@@ -25,6 +25,18 @@
 - [你想住在中国哪里？（转自阮一峰周刊第180期）](https://github.com/smileyby/notes/issues/167)  <sup>0 :speech_balloon:</sup>  	 
 - [掘金小册：小程序底层框架实现原理-笔记](https://github.com/smileyby/notes/issues/165)  <sup>0 :speech_balloon:</sup>  	 
 ## 最新 :new: 
+
+#### [【摸鱼】今日有趣内容推荐](https://github.com/smileyby/notes/issues/305) <sup>0 :speech_balloon:</sup> 	 2025-07-25
+
+:label: : [摸鱼 :tropical_fish:](https://github.com/smileyby/ghiblog/labels/%E6%91%B8%E9%B1%BC%20%3Atropical_fish%3A)
+
+有趣的东西数字化：https://chaz.fun/
+css测试题：https://github.com/TheOdinProject/css-exercises
+
+[更多>>>](https://github.com/smileyby/notes/issues/305)
+
+---
+
 
 #### [【html2canvas 截图 echarts-map和百度地图】解决图片资源跨域和webgl禁止访问上下文问题](https://github.com/smileyby/notes/issues/304) <sup>2 :speech_balloon:</sup> 	 2025-05-16
 
@@ -75,20 +87,6 @@ const fn2 = () => {console.log(2)}
 console.log([fn1, fn2].indexOf(fn1)) => 0
 
 [更多>>>](https://github.com/smileyby/notes/issues/301)
-
----
-
-
-#### [【Vue2】Vue2 初始化超时解决办法](https://github.com/smileyby/notes/issues/300) <sup>0 :speech_balloon:</sup> 	 2024-01-30
-
-:label: : [VUE :milky_way:](https://github.com/smileyby/ghiblog/labels/VUE%20%3Amilky_way%3A)
-
-1.  https://github.com/vuejs-templates/webpack 将这个项目下载到本地
-2.  然后进到这个 这个项目的同级目录执行命令 vue init ./webpack-develop my-project
-
-即可再本地初始化一个vue2项目了
-
-[更多>>>](https://github.com/smileyby/notes/issues/300)
 
 ---
 
@@ -4040,6 +4038,22 @@ https://github.com/niklasvh/html2canvas/pull/2645
 
 <details style="margin-bottom: 15px;">
 <summary><b>摸鱼 :tropical_fish:</b> <sup>0篇</sup></summary>
+
+<div style="margin: 10px 0; padding: 10px; border-left: 3px solid #eee;">
+
+#### [【摸鱼】今日有趣内容推荐](https://github.com/smileyby/notes/issues/305) <sup>0 :speech_balloon:</sup> 	 2025-07-25
+
+:label: : [摸鱼 :tropical_fish:](https://github.com/smileyby/ghiblog/labels/%E6%91%B8%E9%B1%BC%20%3Atropical_fish%3A)
+
+有趣的东西数字化：https://chaz.fun/
+css测试题：https://github.com/TheOdinProject/css-exercises
+
+[更多>>>](https://github.com/smileyby/notes/issues/305)
+
+---
+
+
+</div>
 
 <div style="margin: 10px 0; padding: 10px; border-left: 3px solid #eee;">
 
